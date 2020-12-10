@@ -15,61 +15,7 @@
 </head>
 
 <body>
-<header>
-    <div class="header-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3"><a href="#" class="web-url">www.bookstore.com</a></div>
-                <div class="col-md-6">
-                    <h5>Free Shipping Over $99 + 3 Free Samples With Every Order</h5></div>
-                <div class="col-md-3">
-                    <span class="ph-number">Call : 800 1234 5678</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="main-menu">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="logo"></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="navbar-item active">
-                            <a href="index.html" class="nav-link">Home</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a href="shop.html" class="nav-link">Shop</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a href="about.html" class="nav-link">About</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a href="faq.html" class="nav-link">FAQ</a>
-                        </li>
-                        <li class="navbar-item">
-                            <a href="login.html" class="nav-link">Login</a>
-                        </li>
-                    </ul>
-                    <div class="cart my-2 my-lg-0">
-                            <span>
-                                <i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                        <span class="quntity">3</span>
-                    </div>
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search here..."
-                               aria-label="Search">
-                        <span class="fa fa-search"></span>
-                    </form>
-                </div>
-            </nav>
-        </div>
-    </div>
-</header>
+{% include "Header.html" %}
 <section class="slider">
     <div class="container">
         <div id="owl-demo" class="owl-carousel owl-theme">
@@ -80,7 +26,7 @@
                         <div class="title">
                             <h3>welcome to bookstore</h3>
                             <h5>Discover the best books online with us</h5>
-                            <a href="#" class="btn">shop books</a>
+                            <a href="{% url 'AllBooksPage' %}" class="btn">shop books</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +38,7 @@
                         <div class="title">
                             <h3>welcome to bookstore</h3>
                             <h5>Discover the best books online with us</h5>
-                            <a href="#" class="btn">shop books</a>
+                            <a href="{% url 'AllBooksPage' %}" class="btn">shop books</a>
                         </div>
                     </div>
                 </div>
@@ -104,7 +50,7 @@
                         <div class="title">
                             <h3>welcome to bookstore</h3>
                             <h5>Discover the best books online with us</h5>
-                            <a href="#" class="btn">shop books</a>
+                            <a href="{% url 'AllBooksPage' %}" class="btn">shop books</a>
                         </div>
                     </div>
                 </div>
@@ -116,7 +62,7 @@
                         <div class="title">
                             <h3>welcome to bookstore</h3>
                             <h5>Discover the best books online with us</h5>
-                            <a href="#" class="btn">shop books</a>
+                            <a href="{% url 'AllBooksPage' %}" class="btn">shop books</a>
                         </div>
                     </div>
                 </div>
@@ -131,56 +77,24 @@
             <hr>
         </div>
         <div class="row">
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <img src="{% static 'images/img1.jpg' %}" alt="img">
-                    <h3>how to be a bwase</h3>
-                    <h6><span class="price">$49</span> / <a href="#">Buy Now</a></h6>
-                    <div class="hover">
-                        <a href="product-single.html">
-                            <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                        </a>
+            {% for Book in Books %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="item">
+                        <img src="{{ Book.Cover.url }}" alt="{{ Book.Title }}">
+                        <h3>{{ Book.Title }}</h3>
+                        <h6><span class="price">${{ Book.Price }}</span> / <a
+                                href="{% url 'DetailBookPage' book_id=Book.id %}">Buy Now</a></h6>
+                        <div class="hover">
+                            <a href="product-single.html">
+                                <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <img src="{% static 'images/img2.jpg' %}" alt="img">
-                    <h3>How to write a book...</h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                    <span class="sale">Sale !</span>
-                    <div class="hover">
-                        <a href="product-single.html">
-                            <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <img src="{% static 'images/img3.jpg' %}" alt="img">
-                    <h3>7-day self publish...</h3>
-                    <h6><span class="price">$49</span> / <a href="#">Buy Now</a></h6>
-                    <div class="hover">
-                        <a href="product-single.html">
-                            <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="item">
-                    <img src="{% static 'images/img4.jpg' %}" alt="img">
-                    <h3>wendy doniger</h3>
-                    <h6><span class="price">$49</span> / <a href="#">Buy Now</a></h6>
-                    <div class="hover">
-                        <a href="product-single.html">
-                            <span><i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
+        <br><br>
+        <a href="{% url 'AllBooksPage' %}" class="btn">All Books</a>
     </div>
 </section>
 <section class="about-sec">
@@ -198,191 +112,6 @@
             <a href="shop.html" class="btn yellow">shop books</a>
             <a href="login.html" class="btn black">subscriptions</a>
         </div>
-    </div>
-</section>
-<section class="recent-book-sec">
-    <div class="container">
-        <div class="title">
-            <h2>highly recommendes books</h2>
-            <hr>
-        </div>
-        <div class="row">
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r1.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r2.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r3.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r4.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r5.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r1.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r2.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r3.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r4.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-            <div class="col-lg-2 col-md-3 col-sm-4">
-                <div class="item">
-                    <img src="{% static 'images/r5.jpg' %}" alt="img">
-                    <h3><a href="#">Keepers of the kalachakara</a></h3>
-                    <h6><span class="price">$19</span> / <a href="#">Buy Now</a></h6>
-                </div>
-            </div>
-        </div>
-        <div class="btn-sec">
-            <a href="#" class="btn gray-btn">view all books</a>
-        </div>
-    </div>
-</section>
-<section class="features-sec">
-    <div class="container">
-        <ul>
-            <li>
-                <span class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                <h3>SAFE SHOPPING</h3>
-                <h5>Safe Shopping Guarantee</h5>
-                <h6>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's...</h6>
-            </li>
-            <li>
-                <span class="icon return"><i class="fa fa-reply-all" aria-hidden="true"></i></span>
-                <h3>30- DAY RETURN</h3>
-                <h5>Moneyback guarantee</h5>
-                <h6>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's...</h6>
-            </li>
-            <li>
-                <span class="icon chat"><i class="fa fa-comments" aria-hidden="true"></i></span>
-                <h3>24/7 SUPPORT</h3>
-                <h5>online Consultations</h5>
-                <h6>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's...</h6>
-            </li>
-        </ul>
-    </div>
-</section>
-<section class="offers-sec" style="background:url({% static 'images/offers.jpg' %})no-repeat;">
-    <div class="cover"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="detail">
-                    <h3>Top 50% OFF on Selected</h3>
-                    <h6>We are now offering some good discount
-                        on selected books go and shop them</h6>
-                    <a href="products.html" class="btn blue-btn">view all books</a>
-                    <span class="icon-point percentage">
-                            <img src="images/precentagae.png" alt="">
-                        </span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="detail">
-                    <h3>Shop $ 500 Above and Get Extra!</h3>
-                    <h6>We are now offering some good discount
-                        on selected books go and shop them</h6>
-                    <a href="products.html" class="btn blue-btn">view all books</a>
-                    <span class="icon-point amount"><img src="{% static 'images/amount.png' %}" alt=""></span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<section class="testimonial-sec">
-    <div class="container">
-        <div id="testimonal" class="owl-carousel owl-theme">
-            <div class="item">
-                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's printer took a galley of type and Scrambled it to make a type and typesetting industry.
-                    been the book</h3>
-                <div class="box-user">
-                    <h4 class="author">Susane Mathew</h4>
-                    <span class="country">Australia</span>
-                </div>
-            </div>
-            <div class="item">
-                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's printer took a galley of type and Scrambled it to make a type and typesetting industry.
-                    been the book</h3>
-                <div class="box-user">
-                    <h4 class="author">Susane Mathew</h4>
-                    <span class="country">Australia</span>
-                </div>
-            </div>
-            <div class="item">
-                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's printer took a galley of type and Scrambled it to make a type and typesetting industry.
-                    been the book</h3>
-                <div class="box-user">
-                    <h4 class="author">Susane Mathew</h4>
-                    <span class="country">Australia</span>
-                </div>
-            </div>
-            <div class="item">
-                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's printer took a galley of type and Scrambled it to make a type and typesetting industry.
-                    been the book</h3>
-                <div class="box-user">
-                    <h4 class="author">Susane Mathew</h4>
-                    <span class="country">Australia</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="left-quote">
-        <img src="{% static 'images/left-quote.png' %}" alt="quote">
-    </div>
-    <div class="right-quote">
-        <img src="{% static 'images/right-quote.png' %}" alt="quote">
     </div>
 </section>
 <footer>
@@ -407,43 +136,10 @@
                 <div class="navigation">
                     <h4>Navigation</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="terms-conditions.html">Terms</a></li>
-                        <li><a href="products.html">Products</a></li>
+                        <li><a href="{% url 'HomePage' %}">Home</a></li>
+                        <li><a href="{% url 'ContactUsPage' %}">About Us</a></li>
+                        <li><a href="{% url 'AllBooksPage' %}l">Books</a></li>
                     </ul>
-                </div>
-                <div class="navigation">
-                    <h4>Help</h4>
-                    <ul>
-                        <li><a href="">Shipping & Returns</a></li>
-                        <li><a href="privacy-policy.html">Privacy</a></li>
-                        <li><a href="faq.html">FAQ’s</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-5">
-                <div class="form">
-                    <h3>Quick Contact us</h3>
-                    <h6>We are now offering some good discount
-                        on selected books go and shop them</h6>
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input placeholder="Name" required>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="email" placeholder="Email" required>
-                            </div>
-                            <div class="col-md-12">
-                                <textarea placeholder="Messege"></textarea>
-                            </div>
-                            <div class="col-md-12">
-                                <button class="btn black">Alright, Submit</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -452,7 +148,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5>(C) 2017. All Rights Reserved. BookStore Wordpress Theme</h5>
+                    <h5>(C) 2020. All Rights Reserved. BookStore</h5>
                 </div>
                 <div class="col-md-6">
                     <div class="share align-middle">

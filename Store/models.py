@@ -16,7 +16,7 @@ class Book(models.Model):
     Writer = models.CharField(max_length=64, default='', blank=True, null=True)
     Price = models.FloatField(default=0.0, blank=True, null=True)
     Summary = models.TextField(max_length=1024, default='', blank=True, null=True)
-    Cover = models.ImageField(upload_to='BookCovers/DefaultCover.jpg')
+    Cover = models.ImageField(upload_to='BookCovers', default='BookCovers/DefaultCover.jpg')
     Image_one = models.ImageField(upload_to='BookImages/DefaultImageOne', default='BookImages/DefaultImageOne.jpg')
     Image_two = models.ImageField(upload_to='BookImages/DefaultImageTwo', default='BookImages/DefaultImageTwo.jpg')
 

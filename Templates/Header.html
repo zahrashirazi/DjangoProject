@@ -1,0 +1,51 @@
+{% load static %}
+<header>
+    <div class="main-menu">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="{% url 'HomePage' %}"><img src="{% static 'images/logo.png' %}"
+                                                                         alt="logo"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="navbar-item active">
+                            <a href="{% url 'HomePage' %}" class="nav-link">Home</a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="{% url 'AllBooksPage' %}" class="nav-link">All Boooks</a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="{% url 'ContactUsPage' %}" class="nav-link">About</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="navbar-item">
+                                <a href="{% url 'LogoutPage' %}" class="nav-link">Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="navbar-item">
+                                <a href="{% url 'LoginPage' %}" class="nav-link">Login</a>
+                            </li>
+                            <li class="navbar-item">
+                                <a href="{% url 'RegisterPage' %}" class="nav-link">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <div class="cart my-2 my-lg-0">
+                            <span>
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
+                        <span class="quntity">3</span>
+                    </div>
+                    <form class="form-inline my-2 my-lg-0" method="get">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search here..."
+                               aria-label="Search">
+                        <span class="fa fa-search"></span>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
