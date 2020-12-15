@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -23,3 +24,24 @@ class Book(models.Model):
     def __str__(self):
         return '{}, {}, {}, {}'.format(self.Title, self.Category, self.Writer, str(self.Price),
                                        self.Year_of_publication)
+
+
+class CartItem(models.Model):
+    Book = models.OneToOneField(Book, on_delete=models.CASCADE, blank=True, null=True)
+    Quantity = models.IntegerField(default=0, blank=True, null=True)
+    Final_Price = models.FloatField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return '{} {}'.format(str(Book.Title), str(self.Quantity))
+
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    Item = models.ManyToManyField(CartItem, blank=True)
+    number = models.PositiveIntegerField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        try:
+            return str(self.user.username)
+        except:
+            return ''

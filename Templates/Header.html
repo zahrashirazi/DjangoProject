@@ -35,9 +35,11 @@
                         {% endif %}
                     </ul>
                     <div class="cart my-2 my-lg-0">
+                        <a href="{% url 'PaymentPage' %}">
                             <span>
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i></span>
-                        <span class="quntity">3</span>
+                            <span class="quntity">{{ Number }}</span>
+                        </a>
                     </div>
                     <form class="form-inline my-2 my-lg-0" method="get">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search here..."

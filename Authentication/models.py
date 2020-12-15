@@ -31,6 +31,9 @@ class Users(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     Phone_number = models.OneToOneField(PhoneNumber, on_delete=models.CASCADE, null=True, blank=True)
 
+    def __str__(self):
+        return str(self.Phone_number)
+
 
 def unique_token_sms(instance):
     model = instance.__class__

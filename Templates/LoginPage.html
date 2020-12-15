@@ -1,10 +1,55 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Book Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#03a6f3">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
 
+<body>
+    {% include 'Header.html' %}
+    <div class="breadcrumb">
+        <div class="container">
+            <a class="breadcrumb-item" href="index.html">Home</a>
+            <span class="breadcrumb-item active">Login</span>
+        </div>
+    </div>
+    <section class="static about-sec">
+        <div class="container">
+            <h1>My Account / Login</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
+            <div class="form">
+                <form method="post">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-5">
+                            <input name="PhoneNumber" placeholder="Enter Your Phone Number" required>
+                            <span class="required-star">*</span>
+                        </div>
+                        <div class="col-md-5">
+                            <input name="password" type="password" placeholder="Enter YourPassword" required>
+                            <span class="required-star">*</span>
+                        </div>
+                        <div class="col-lg-8 col-md-12">
+                            <button type="submit" class="btn black">Login</button>
+                            <h5>not Registered? <a href="{% url 'RegisterPage' %}">Register here</a></h5>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% include 'Footer.html' %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}
 </body>
+
 </html>
