@@ -8,7 +8,7 @@ from Authentication.models import Users, PhoneNumber
 from Store.models import Cart
 from Store.views import home_page_view
 import requests
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 
 
@@ -34,8 +34,10 @@ def login_page_view(request, *args, **kwargs):
                 user = Users.objects.get(Phone_number=number_instance).user
                 password = request.POST.get('password')
                 if user.check_password(raw_password=password):
-                    slug = get_random_slug()
-                    send_sms(number, request, slug)
+                    if number_instance.Status == 'V':
+                        slug = get_random_slug()
+                        send_sms(number, request, slug)
+                        number_instance.Token = slug
                 else:
                     return render(request=request, template_name='LoginPage.html', context=context, content_type=None,
                                   status=None,
@@ -87,6 +89,7 @@ def signup_page_view(request, *args, **kwargs):
                               using=None)
             except PhoneNumber.DoesNotExist:
                 registration = Users.objects.create()
+                registration.password = password
                 user = User.objects.create_user(username=username, password=password)
                 user.save()
                 registration.user = user
@@ -113,9 +116,11 @@ def user_panel_main_page_view(request, *args, **kwargs):
         except Cart.DoesNotExist:
             number = 0
         context['Number'] = number
-    return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
-                  status=None,
-                  using=None)
+        return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
+                      status=None,
+                      using=None)
+    else:
+        return redirect(home_page_view)
 
 
 def get_random_slug():
@@ -142,7 +147,7 @@ def send_sms(number, request, slug):
         'text': "Pleas Click The Link Below to Activate Your Login: \n {}".format(
             request.get_host() + '/user/activate/' + slug),
     }
-    respond = requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
+    requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
     return slug
 
 
@@ -154,6 +159,9 @@ def verification(request, token, *args, **kwargs):
             phone_number.NumberOfSentNumbers = int(phone_number.NumberOfSentNumbers) + 1
             phone_number.Status = 'V'
             phone_number.save()
+            user = authenticate(username=phone_number.user.username,
+                                password=Users.objects.get(Phone_number=phone_number).password)
+            login(request, user)
             return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
                           status=None,
                           using=None)

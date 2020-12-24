@@ -31,6 +31,7 @@ class Users(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     Phone_number = models.OneToOneField(PhoneNumber, on_delete=models.CASCADE, null=True, blank=True)
     Verified = models.BooleanField(default=False, blank=False, null=True)
+    password = models.CharField(max_length=64, blank=True, null=True)
 
     def __str__(self):
         return str(self.Phone_number)
