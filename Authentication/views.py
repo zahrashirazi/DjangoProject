@@ -81,6 +81,11 @@ def signup_page_view(request, *args, **kwargs):
             password = request.POST.get('Password', '')
             try:
                 ins = PhoneNumber.objects.get(Number=phone_number)
+                return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
+                              status=None,
+                              using=None)
+            except:
+                ins = PhoneNumber.objects.create(Number=phone_number)
                 registration, created = Users.objects.get_or_create(Phone_number=ins)
                 if created:
                     return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
@@ -103,10 +108,6 @@ def signup_page_view(request, *args, **kwargs):
                             return redirect(login_page_view)
                     except:
                         pass
-            except:
-                return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
-                              status=None,
-                              using=None)
 
     return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                   status=None,
