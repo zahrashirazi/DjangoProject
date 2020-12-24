@@ -105,6 +105,7 @@ def signup_page_view(request, *args, **kwargs):
                             pass
                         else:
                             registration.Phone_number = phone_number_instance
+                            registration.save()
                             return redirect(login_page_view)
                     except:
                         pass
