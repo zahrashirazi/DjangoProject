@@ -76,11 +76,11 @@ def signup_page_view(request, *args, **kwargs):
         context['Number'] = number
     else:
         if request.method == "POST":
-            username = request.POST.get()
-            phone_number = request.POST.get()
-            password = request.POST.get()
+            username = request.POST.get('UserName', '')
+            phone_number = request.POST.get('PhoneNumber', '')
+            password = request.POST.get('Password', '')
 
-            registration, created = Users.objects.get_or_create()
+            registration, created = Users.objects.get_or_create(Phone_number=phone_number)
             if created:
                 return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                               status=None,
@@ -171,3 +171,19 @@ def send_sms(number, request):
     respond = requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
     print(respond)
     return slug
+
+
+def verification(request, token, *args, **kwargs):
+    context = {}
+    if token:
+        try:
+            phone_number = PhoneNumber.objects.get(Token=token)
+            phone_number.NumberOfSentNumbers = int(phone_number.NumberOfSentNumbers) + 1
+            phone_number.Status = 'V'
+            phone_number.save()
+        except PhoneNumber.DoesNotExist:
+            return redirect(home_page_view)
+
+    return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
+                  status=None,
+                  using=None)

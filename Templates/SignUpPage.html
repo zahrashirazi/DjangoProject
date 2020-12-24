@@ -29,7 +29,7 @@
             industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived not
             only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
         <div class="form">
-            <form>
+            <form method="post">{% csrf_token %}
                 <div class="row">
                     <div class="col-md-4">
                         <input name="UserName" placeholder="Enter User Name" required>
