@@ -24,7 +24,6 @@ def login_page_view(request, *args, **kwargs):
     else:
         if request.method == 'POST':
             number = request.POST.get('PhoneNumber')
-            send_sms(number, request)
             try:
                 try:
                     number_instance = PhoneNumber.objects.get(Number=number)
@@ -35,7 +34,8 @@ def login_page_view(request, *args, **kwargs):
                 user = Users.objects.get(Phone_number=number_instance).user
                 password = request.POST.get('password')
                 if user.check_password(raw_password=password):
-                    send_sms(number, request)
+                    slug = get_random_slug()
+                    send_sms(number, request, slug)
                 else:
                     return render(request=request, template_name='LoginPage.html', context=context, content_type=None,
                                   status=None,
@@ -81,6 +81,7 @@ def signup_page_view(request, *args, **kwargs):
             password = request.POST.get('Password', '')
             try:
                 ins = PhoneNumber.objects.get(Number=phone_number)
+                send_sms(number=phone_number, request=request, slug=ins.Token)
                 return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                               status=None,
                               using=None)
@@ -96,7 +97,8 @@ def signup_page_view(request, *args, **kwargs):
                         user = User.objects.create_user(username=username, password=password)
                         user.save()
                         registration.user = user
-                        slug = send_sms(phone_number, request)
+                        slug = get_random_slug()
+                        slug = send_sms(phone_number, request, slug)
                         phone_number_instance, created = PhoneNumber.objects.get_or_create(Token=slug,
                                                                                            Number=phone_number,
                                                                                            user=user)
@@ -143,8 +145,7 @@ def get_random_slug():
     return slug
 
 
-def send_sms(number, request):
-    slug = get_random_slug()
+def send_sms(number, request, slug):
     data = {
         'username': '09020021211',
         'password': '1646',
