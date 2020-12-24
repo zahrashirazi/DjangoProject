@@ -2,6 +2,7 @@ from django.http import response
 from django.shortcuts import render, redirect
 
 # Create your views here.
+from Authentication.views import payment_page_view
 from Store.models import Book, Cart, CartItem
 
 
@@ -83,19 +84,6 @@ def contact_us_page_view(request, *args, **kwargs):
                   using=None)
 
 
-def payment_page_view(request, *args, **kwargs):
-    context = {}
-    if request.user.is_authenticated:
-        try:
-            number = Cart.objects.get(user=request.user).number
-        except Cart.DoesNotExist:
-            number = 0
-        context['Number'] = number
-    return render(request=request, template_name='PaymentPage.html', context=context, content_type=None,
-                  status=None,
-                  using=None)
-
-
 def add_to_cart_view(request, book_id, *args, **kwargs):
     context = {}
     if book_id:
@@ -120,9 +108,7 @@ def add_to_cart_view(request, book_id, *args, **kwargs):
                 except Cart.DoesNotExist:
                     number = 0
                 context['Number'] = number
-                return render(request=request, template_name='PaymentPage.html', context=context, content_type=None,
-                              status=None,
-                              using=None)
+                return redirect(payment_page_view)
             except:
                 raise
                 pass
