@@ -79,28 +79,34 @@ def signup_page_view(request, *args, **kwargs):
             username = request.POST.get('UserName', '')
             phone_number = request.POST.get('PhoneNumber', '')
             password = request.POST.get('Password', '')
-
-            registration, created = Users.objects.get_or_create(Phone_number=phone_number)
-            if created:
+            try:
+                ins = PhoneNumber.objects.get(Number=phone_number)
+                registration, created = Users.objects.get_or_create(Phone_number=ins)
+                if created:
+                    return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
+                                  status=None,
+                                  using=None)
+                else:
+                    try:
+                        user = User.objects.create_user(username=username, password=password)
+                        user.save()
+                        registration.user = user
+                        slug = send_sms(phone_number, request)
+                        phone_number_instance, created = PhoneNumber.objects.get_or_create(Token=slug,
+                                                                                           Number=phone_number,
+                                                                                           user=user)
+                        phone_number_instance.save()
+                        if created:
+                            pass
+                        else:
+                            registration.Phone_number = phone_number_instance
+                            return redirect(login_page_view)
+                    except:
+                        pass
+            except:
                 return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                               status=None,
                               using=None)
-            else:
-                try:
-                    user = User.objects.create_user(username=username, password=password)
-                    user.save()
-                    registration.user = user
-                    slug = send_sms(phone_number, request)
-                    phone_number_instance, created = PhoneNumber.objects.get_or_create(Token=slug, Number=phone_number,
-                                                                                       user=user)
-                    phone_number_instance.save()
-                    if created:
-                        pass
-                    else:
-                        registration.Phone_number = phone_number_instance
-                        return redirect(login_page_view)
-                except:
-                    pass
 
     return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                   status=None,
