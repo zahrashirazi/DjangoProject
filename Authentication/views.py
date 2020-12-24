@@ -87,7 +87,7 @@ def signup_page_view(request, *args, **kwargs):
             except:
                 ins = PhoneNumber.objects.create(Number=phone_number)
                 registration, created = Users.objects.get_or_create(Phone_number=ins)
-                if created:
+                if not created:
                     return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                                   status=None,
                                   using=None)
@@ -154,6 +154,9 @@ def send_sms(number, request):
             request.get_full_path() + '/user/activate' + slug),
     }
     respond = requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
+    print(respond)
+    print("Pleas Click The Link Below to Activate Your Login: \n {}".format(
+        request.get_full_path() + '/user/activate' + slug))
     return slug
 
 
