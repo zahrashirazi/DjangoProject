@@ -6,7 +6,6 @@ urlpatterns = [
     path('logout', logout_page_view, name='LogoutPage'),
     path('register', signup_page_view, name='RegisterPage'),
     path('activate/<str:token>', verification, name='ActivatePage'),
-    path('payment', payment_page_view, name='PaymentPage'),
     path('panel', signup_page_view, name='UserPanel'),
 
 ]
