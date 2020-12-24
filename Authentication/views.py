@@ -134,6 +134,7 @@ def payment_page_view(request, *args, **kwargs):
                 cart = Cart.objects.get(user=request.user)
                 cart.number = 0
                 cart.Item.clear()
+                cart.save()
                 context['ALERT'] = 'Your payment paid successfully.'
             except:
                 pass
