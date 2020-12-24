@@ -140,12 +140,9 @@ def send_sms(number, request, slug):
         'to': str(number),
         'from': '30008666021211',
         'text': "Pleas Click The Link Below to Activate Your Login: \n {}".format(
-            request.get_host() + '/user/activate' + slug),
+            request.get_host() + '/user/activate/' + slug),
     }
     respond = requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
-    print(respond)
-    print("Pleas Click The Link Below to Activate Your Login: \n {}".format(
-        request.get_host() + '/user/activate/' + slug))
     return slug
 
 

@@ -146,3 +146,22 @@ def add_to_cart_view(request, book_id, *args, **kwargs):
         number = 0
     context['Number'] = number
     return redirect(home_page_view)
+
+
+def search_view(request, *args, **kwargs):
+    context = {}
+    query = request.GET.get('query', '')
+    if query != '':
+        result = []
+        for keyword in query.split(' '):
+            result += list(Book.objects.filter(Title__icontains=keyword))
+            result += list(Book.objects.filter(Summary__icontains=keyword))
+        books = []
+        for book in result:
+            books.append(book)
+        books = list(set(books))
+        context['Books'] = books
+
+    return render(request=request, template_name='SearchedBooksPage.html', context=context, content_type=None,
+                  status=None,
+                  using=None)

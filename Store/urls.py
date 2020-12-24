@@ -8,5 +8,6 @@ urlpatterns = [
     path('books/add/<int:book_id>', add_to_cart_view, name='AddToCart'),
     path('about', contact_us_page_view, name='ContactUsPage'),
     path('payment', payment_page_view, name='PaymentPage'),
+    path('serch', search_view, name='SearchingPage'),
 
 ]

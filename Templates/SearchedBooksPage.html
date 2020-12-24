@@ -1,4 +1,5 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -14,28 +15,37 @@
 </head>
 
 <body>
-{% include 'Header.html' %}
+{% include "Header.html" %}
 <div class="breadcrumb">
     <div class="container">
         <a class="breadcrumb-item" href="index.html">Home</a>
-        <span class="breadcrumb-item active">About Us</span>
+        <span class="breadcrumb-item active">Products</span>
     </div>
 </div>
 <section class="static about-sec">
     <div class="container">
-        <h1>About Us</h1>
-        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived not
-            only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
-
-    </div>
+        <h2>Searched Result</h2>
+        <div class="recent-book-sec">
+            <div class="row">
+                {% for Book in Books %}
+                    <div class="col-md-3">
+                        <div class="item">
+                            <img src="{{ Book.Cover.url }}" alt="{{ Book.Title }}">
+                            <h3><a href="{% url 'DetailBookPage' book_id=Book.id %}">{{ Book.Title }}</a></h3>
+                            <h6><span class="price">{{ Book.Price }}</span> / <a
+                                    href="{% url 'DetailBookPage' book_id=Book.id %}">Buy Now</a></h6>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </section>
 {% include 'Footer.html' %}
 <script src="{% static 'js/jquery.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
-<script src="{% static 'js/custom.js' %}
+<script src="{% static 'js/custom.js' %}"></script>
 </body>
 
 </html>

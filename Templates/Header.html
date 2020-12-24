@@ -41,10 +41,11 @@
                             <span class="quntity">{{ Number }}</span>
                         </a>
                     </div>
-                    <form class="form-inline my-2 my-lg-0" method="get">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search here..."
+                    <form action="{% url 'SearchingPage' %}" class="form-inline my-2 my-lg-0" method="get">
+                        <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search here..."
                                aria-label="Search">
-                        <span class="fa fa-search"></span>
+                        <button type="submit"><span class="fa fa-search"></span></button>
+
                     </form>
                 </div>
             </nav>
