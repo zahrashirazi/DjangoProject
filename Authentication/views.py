@@ -114,7 +114,6 @@ def signup_page_view(request, *args, **kwargs):
                   using=None)
 
 
-
 def user_panel_main_page_view(request, *args, **kwargs):
     context = {}
     if request.user.is_authenticated:

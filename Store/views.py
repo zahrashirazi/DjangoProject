@@ -86,7 +86,6 @@ def contact_us_page_view(request, *args, **kwargs):
 
 def payment_page_view(request, *args, **kwargs):
     context = {}
-
     if request.user.is_authenticated:
         if request.method == 'POST':
             try:
@@ -98,16 +97,16 @@ def payment_page_view(request, *args, **kwargs):
             except:
                 pass
 
-            books = []
-            try:
-                number = Cart.objects.get(user=request.user).number
-                items = Cart.objects.get(user=request.user).Item.all()
-                for item in items:
-                    books.append(item)
-            except Cart.DoesNotExist:
-                number = 0
-            context['Number'] = number
-            context['Books'] = books
+        books = []
+        try:
+            number = Cart.objects.get(user=request.user).number
+            items = Cart.objects.get(user=request.user).Item.all()
+            for item in items:
+                books.append(item)
+        except Cart.DoesNotExist:
+            number = 0
+        context['Number'] = number
+        context['Books'] = books
 
     return render(request=request, template_name='PaymentPage.html', context=context, content_type=None,
                   status=None,
