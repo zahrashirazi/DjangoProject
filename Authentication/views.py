@@ -116,6 +116,7 @@ def signup_page_view(request, *args, **kwargs):
 
 def payment_page_view(request, *args, **kwargs):
     context = {}
+
     if request.user.is_authenticated:
         books = []
         try:
@@ -128,10 +129,15 @@ def payment_page_view(request, *args, **kwargs):
         context['Number'] = number
         context['Books'] = books
 
-        try:
-            pass
-        except:
-            pass
+        if request.method == 'POST':
+            try:
+                cart = Cart.objects.get(user=request.user)
+                cart.number = 0
+                cart.Item.clear()
+                context['ALERT'] = 'Your payment paid successfully.'
+            except:
+                pass
+
     return render(request=request, template_name='PaymentPage.html', context=context, content_type=None,
                   status=None,
                   using=None)
@@ -176,7 +182,6 @@ def send_sms(number, request):
             request.get_full_path() + '/user/activate' + slug),
     }
     respond = requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
-    print(respond)
     return slug
 
 
@@ -188,9 +193,8 @@ def verification(request, token, *args, **kwargs):
             phone_number.NumberOfSentNumbers = int(phone_number.NumberOfSentNumbers) + 1
             phone_number.Status = 'V'
             phone_number.save()
+            return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
+                          status=None,
+                          using=None)
         except PhoneNumber.DoesNotExist:
             return redirect(home_page_view)
-
-    return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
-                  status=None,
-                  using=None)

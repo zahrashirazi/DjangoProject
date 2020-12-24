@@ -16,6 +16,9 @@
 
 <body>
 {% include "Header.html" %}
+{% if ALERT %}
+    <script>alert("{{ ALERT }}")</script>
+{% endif %}
 <div class="breadcrumb">
     <div class="container">
         <a class="breadcrumb-item" href="{% url 'HomePage' %}">Home</a>
