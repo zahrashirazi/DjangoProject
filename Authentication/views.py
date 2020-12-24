@@ -116,6 +116,9 @@ def user_panel_main_page_view(request, *args, **kwargs):
         except Cart.DoesNotExist:
             number = 0
         context['Number'] = number
+
+        phone_number = PhoneNumber.objects.get(user=request.user).Number
+        context['phone_number'] = phone_number
         return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
                       status=None,
                       using=None)
