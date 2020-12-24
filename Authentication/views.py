@@ -85,32 +85,20 @@ def signup_page_view(request, *args, **kwargs):
                 return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                               status=None,
                               using=None)
-            except:
-                ins = PhoneNumber.objects.create(Number=phone_number)
-                registration, created = Users.objects.get_or_create(Phone_number=ins)
-                if not created:
-                    return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
-                                  status=None,
-                                  using=None)
-                else:
-                    try:
-                        user = User.objects.create_user(username=username, password=password)
-                        user.save()
-                        registration.user = user
-                        slug = get_random_slug()
-                        slug = send_sms(phone_number, request, slug)
-                        phone_number_instance, created = PhoneNumber.objects.get_or_create(Token=slug,
-                                                                                           Number=phone_number,
-                                                                                           user=user)
-                        phone_number_instance.save()
-                        if created:
-                            pass
-                        else:
-                            registration.Phone_number = phone_number_instance
-                            registration.save()
-                            return redirect(login_page_view)
-                    except:
-                        pass
+            except PhoneNumber.DoesNotExist:
+                registration = Users.objects.create()
+                user = User.objects.create_user(username=username, password=password)
+                user.save()
+                registration.user = user
+                slug = get_random_slug()
+                slug = send_sms(phone_number, request, slug)
+                phone_number_instance = PhoneNumber.objects.create(Token=slug,
+                                                                   Number=phone_number,
+                                                                   user=user)
+                phone_number_instance.save()
+                registration.Phone_number = phone_number_instance
+                registration.save()
+                return redirect(login_page_view)
 
     return render(request=request, template_name='SignUpPage.html', context=context, content_type=None,
                   status=None,
@@ -152,12 +140,12 @@ def send_sms(number, request, slug):
         'to': str(number),
         'from': '30008666021211',
         'text': "Pleas Click The Link Below to Activate Your Login: \n {}".format(
-            request.get_full_path() + '/user/activate' + slug),
+            request.get_host() + '/user/activate' + slug),
     }
     respond = requests.post(url='https://rest.payamak-panel.com/api/SendSMS/SendSMS', data=data).json()
     print(respond)
     print("Pleas Click The Link Below to Activate Your Login: \n {}".format(
-        request.get_full_path() + '/user/activate' + slug))
+        request.get_host() + '/user/activate/' + slug))
     return slug
 
 
