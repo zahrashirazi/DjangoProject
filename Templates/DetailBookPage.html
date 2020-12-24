@@ -78,8 +78,10 @@
                         <a href="{% url 'AddToCart' book_id=Book.id %}">
                             <button class="btn">Add To cart</button>
                         </a>
-                    {% endif %}
+                    {% else %}
                         <button class="btn">YOU MUST LOGIN TO BUY THIS</button>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
