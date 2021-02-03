@@ -79,7 +79,7 @@
                             <button class="btn">Add To cart</button>
                         </a>
                     {% else %}
-                        <button class="btn">YOU MUST LOGIN TO BUY THIS</button>
+                        <a href="{% url "LoginPage" %}" class="btn">YOU MUST LOGIN TO BUY THIS</a>
                     {% endif %}
 
                 </div>

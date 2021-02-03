@@ -38,6 +38,7 @@ def login_page_view(request, *args, **kwargs):
                         slug = get_random_slug()
                         send_sms(number, request, slug)
                         number_instance.Token = slug
+                        number_instance.save()
                 else:
                     return render(request=request, template_name='LoginPage.html', context=context, content_type=None,
                                   status=None,
@@ -156,17 +157,16 @@ def send_sms(number, request, slug):
 
 def verification(request, token, *args, **kwargs):
     context = {}
-    if token:
-        try:
-            phone_number = PhoneNumber.objects.get(Token=token)
-            phone_number.NumberOfSentNumbers = int(phone_number.NumberOfSentNumbers) + 1
-            phone_number.Status = 'V'
-            phone_number.save()
-            user = authenticate(username=phone_number.user.username,
-                                password=Users.objects.get(Phone_number=phone_number).password)
-            login(request, user)
-            return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
-                          status=None,
-                          using=None)
-        except PhoneNumber.DoesNotExist:
-            return redirect(home_page_view)
+    try:
+        phone_number = PhoneNumber.objects.get(Token=token)
+        phone_number.NumberOfSentNumbers = int(phone_number.NumberOfSentNumbers) + 1
+        phone_number.Status = 'V'
+        phone_number.save()
+        user = authenticate(username=phone_number.user.username,
+                            password=Users.objects.get(Phone_number=phone_number).password)
+        login(request, user)
+        return render(request=request, template_name='UserPanelMainPage.html', context=context, content_type=None,
+                      status=None,
+                      using=None)
+    except PhoneNumber.DoesNotExist:
+        return redirect(home_page_view)

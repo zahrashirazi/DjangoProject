@@ -14,42 +14,44 @@
 </head>
 
 <body>
-    {% include 'Header.html' %}
-    <div class="breadcrumb">
-        <div class="container">
-            <a class="breadcrumb-item" href="index.html">Home</a>
-            <span class="breadcrumb-item active">Login</span>
+{% include 'Header.html' %}
+<div class="breadcrumb">
+    <div class="container">
+        <a class="breadcrumb-item" href="{% url "HomePage" %}">Home</a>
+        <span class="breadcrumb-item active">Login</span>
+    </div>
+</div>
+<section class="static about-sec">
+    <div class="container">
+        <h1>My Account / Login</h1>
+        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+            industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived not
+            only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
+        <div class="form">
+            <form method="post">{% csrf_token %}
+                <div class="row">
+                    <div class="col-md-5">
+                        <input name="PhoneNumber" placeholder="Enter Your Phone Number" required>
+                        <span class="required-star">*</span>
+                    </div>
+                    <div class="col-md-5">
+                        <input name="password" type="password" placeholder="Enter YourPassword" required>
+                        <span class="required-star">*</span>
+                    </div>
+                    <div class="col-lg-8 col-md-12">
+                        <button type="submit" class="btn black">Login</button>
+                        <h5>not Registered? <a href="{% url 'RegisterPage' %}">Register here</a></h5>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-    <section class="static about-sec">
-        <div class="container">
-            <h1>My Account / Login</h1>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's printer took a galley of type and scrambled it to make a type specimen book. It has survived not only fiveLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem </p>
-            <div class="form">
-                <form method="post">{% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-5">
-                            <input name="PhoneNumber" placeholder="Enter Your Phone Number" required>
-                            <span class="required-star">*</span>
-                        </div>
-                        <div class="col-md-5">
-                            <input name="password" type="password" placeholder="Enter YourPassword" required>
-                            <span class="required-star">*</span>
-                        </div>
-                        <div class="col-lg-8 col-md-12">
-                            <button type="submit" class="btn black">Login</button>
-                            <h5>not Registered? <a href="{% url 'RegisterPage' %}">Register here</a></h5>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-    {% include 'Footer.html' %}
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/custom.js' %}
+</section>
+{% include 'Footer.html' %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/custom.js' %}
 </body>
 
 </html>
