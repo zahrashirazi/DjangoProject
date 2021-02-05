@@ -32,7 +32,7 @@ class CartItem(models.Model):
     Final_Price = models.FloatField(default=0, blank=True, null=True)
 
     def __str__(self):
-        return self.Final_Price
+        return str(self.Final_Price)
 
 
 class Cart(models.Model):
