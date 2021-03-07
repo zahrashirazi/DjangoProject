@@ -13,24 +13,24 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
                         <li class="navbar-item active">
-                            <a href="{% url 'HomePage' %}" class="nav-link">Home</a>
+                            <a href="{% url 'HomePage' %}" class="nav-link">خانه</a>
                         </li>
                         <li class="navbar-item">
-                            <a href="{% url 'AllBooksPage' %}" class="nav-link">Kharide ketab</a>
+                            <a href="{% url 'AllBooksPage' %}" class="nav-link">خرید کتاب</a>
                         </li>
                         <li class="navbar-item">
-                            <a href="{% url 'ContactUsPage' %}" class="nav-link">About</a>
+                            <a href="{% url 'ContactUsPage' %}" class="nav-link">درباره من</a>
                         </li>
                         {% if user.is_authenticated %}
                             <li class="navbar-item">
-                                <a href="{% url 'LogoutPage' %}" class="nav-link">kharej shodan</a>
+                                <a href="{% url 'LogoutPage' %}" class="nav-link">خروج</a>
                             </li>
                         {% else %}
                             <li class="navbar-item">
-                                <a href="{% url 'LoginPage' %}" class="nav-link">vorood</a>
+                                <a href="{% url 'LoginPage' %}" class="nav-link">ورود</a>
                             </li>
                             <li class="navbar-item">
-                                <a href="{% url 'RegisterPage' %}" class="nav-link">sabtenam</a>
+                                <a href="{% url 'RegisterPage' %}" class="nav-link">ثبت نام</a>
                             </li>
                         {% endif %}
                     </ul>
